@@ -28,7 +28,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
 
 # Define the ECS service that will run the task
 resource "aws_ecs_service" "ecs_service" {
-  name            = var.ecs_service_name
+  name            = var.ecs_task_name
   cluster         = var.ecs_cluster_id
   task_definition = aws_ecs_task_definition.ecs_task_definition.arn
   desired_count   = 2
@@ -54,7 +54,7 @@ resource "aws_ecs_service" "ecs_service" {
 
   load_balancer {
     target_group_arn = var.aws_lb_target_group
-    container_name   = var.ecs_service_name
+    container_name   = var.ecs_task_name
     container_port   = 80
   }
 }
