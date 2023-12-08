@@ -44,7 +44,7 @@ resource "aws_ecs_service" "ecs_service" {
   }
 
   triggers = {
-    redeployment = timestamp()
+    redeployment = true
   }
 
   capacity_provider_strategy {
