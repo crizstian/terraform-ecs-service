@@ -86,12 +86,12 @@ resource "harness_platform_service" "example" {
       projectIdentifier: infrastructure_team_MQTH
       serviceDefinition:
         spec:
-        variables:
-          - name: desiredCount
-            type: String
-            description: ""
-            required: false
-            value: "${var.service_desired_count}"
+          variables:
+            - name: desiredCount
+              type: String
+              description: ""
+              required: false
+              value: "${var.service_desired_count}"
           manifests:
             - manifest:
                 identifier: service
