@@ -20,8 +20,8 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
       essential = true
     
     portMappings = [{
-           containerPort = var.ecs_task_port
-          hostPort      = var.ecs_task_port
+          containerPort = tostring(var.ecs_task_port)
+          hostPort      = tostring(var.ecs_task_port)
           protocol      = "tcp"
     }]
 
