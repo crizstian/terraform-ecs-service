@@ -19,7 +19,9 @@ variable "ecs_task_cpu" {
 variable "ecs_task_memory" {
      default     = 256
 }
-variable "ecs_task_port" {}
+variable "ecs_task_port" {
+    type = string
+}
 
 variable "service_desired_count" {}
 
