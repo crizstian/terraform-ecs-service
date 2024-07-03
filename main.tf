@@ -42,7 +42,7 @@ resource "aws_ecs_service" "ecs_service" {
 
   network_configuration {
     subnets         = var.vpc_subnets
-    security_groups = [var.vpc_security_group_ids]
+    security_groups = jsondecode(var.vpc_security_group_ids)
   }
 
   # force_new_deployment = true
