@@ -121,3 +121,62 @@ resource "harness_platform_service" "example" {
         type: ECS
   EOT
 }
+
+resource "harness_platform_service" "example2" {
+  identifier  = "bankingdemo_v2"
+  name        = "bankingdemo_v2"
+  description = "test"
+  org_id      = "cristian_labs_MQTH"
+  project_id  = "infrastructure_team_MQTH"
+
+  ## SERVICE V2 UPDATE
+  ## We now take in a YAML that can define the service definition for a given Service
+  ## It isn't mandatory for Service creation 
+  ## It is mandatory for Service use in a pipeline
+
+  yaml = <<-EOT
+    name: bankingdemo_v2
+    identifier: bankingdemo_v2
+    orgIdentifier: cristian_labs_MQTH
+    projectIdentifier: infrastructure_team_MQTH
+    serviceDefinition:
+      spec:
+        variables:
+          - name: desiredCount
+            type: String
+            description: ""
+            required: false
+            value: "1"
+        manifests:
+          - manifest:
+              identifier: task
+              type: EcsTaskDefinition
+              spec:
+                store:
+                  type: Harness
+                  spec:
+                    files:
+                      - /task
+          - manifest:
+              identifier: service
+              type: EcsServiceDefinition
+              spec:
+                store:
+                  type: Harness
+                  spec:
+                    files:
+                      - /ecs-service
+        artifacts:
+          primary:
+            primaryArtifactRef: docker
+            sources:
+              - spec:
+                  connectorRef: account.DockerHubDiego
+                  imagePath: diegokoala/harness-ff-bankingapp-ecs
+                  tag: ecs
+                  digest: ""
+                identifier: docker
+                type: DockerRegistry
+      type: ECS
+  EOT
+}
