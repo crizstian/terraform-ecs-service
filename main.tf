@@ -64,7 +64,7 @@ resource "aws_ecs_service" "ecs_service" {
 
 resource "harness_platform_service" "example" {
   identifier  = "ecs"
-  name        = "ecs"
+  name        = var.service_name
   description = "test"
   org_id      = "cristian_labs_MQTH"
   project_id  = "infrastructure_team_MQTH"
@@ -76,7 +76,7 @@ resource "harness_platform_service" "example" {
 
   yaml = <<-EOT
     service:
-      name: ecs
+      name: ${var.service_name}
       identifier: ecs
       orgIdentifier: cristian_labs_MQTH
       projectIdentifier: infrastructure_team_MQTH
