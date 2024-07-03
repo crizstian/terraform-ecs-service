@@ -11,22 +11,25 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   #   operating_system_family = "LINUX"
   #   cpu_architecture        = "X86_64"
   # }
-  container_definitions = jsonencode([
-    {
+
+  container_definitions = jsonencode([{
       name      = var.ecs_task_name
       image     = var.ecs_task_image
       cpu       = var.ecs_task_cpu
       memory    = var.ecs_task_memory
       essential = true
-      portMappings = [
-        {
-          containerPort = var.ecs_task_port
+    
+    portMappings = [{
+           containerPort = var.ecs_task_port
           hostPort      = var.ecs_task_port
           protocol      = "tcp"
-        }
-      ]
-    }
-  ])
+    }]
+
+    environment = [{
+      name  = "PORT"
+      value = tostring(var.ecs_task_port)
+    }]
+  }])
 }
 
 # Define the ECS service that will run the task
