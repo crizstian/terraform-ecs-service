@@ -1,7 +1,7 @@
 # Define the ECS task definition for the service
 resource "aws_ecs_task_definition" "ecs_task_definition" {
   family             = var.ecs_task_name
-  network_mode       = "bridge"
+  network_mode       = "awsvpc"
   cpu                      = var.task_cpu
   memory                   = var.task_memory
   execution_role_arn       = var.task_execution_role_arn
