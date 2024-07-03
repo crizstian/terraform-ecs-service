@@ -60,7 +60,7 @@ resource "aws_ecs_service" "ecs_service" {
   # }
 
   load_balancer {
-    target_group_arn = lookup(jsonencode(var.aws_lb_target_group), "ex-target", {}).arn
+    target_group_arn = lookup(jsondecode(var.aws_lb_target_group), "ex-target", {}).arn
     container_name   = var.ecs_task_name
     container_port   = var.ecs_task_port
   }
