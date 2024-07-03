@@ -19,9 +19,9 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
       memory    = var.ecs_task_memory
       essential = true
     
-    portMappings = [{
-          containerPort = tostring(var.ecs_task_port)
-          hostPort      = tostring(var.ecs_task_port)
+      portMappings = [{
+          containerPort = tonumber(var.ecs_task_port)
+          hostPort      = tonumber(var.ecs_task_port)
           protocol      = "tcp"
     }]
 
