@@ -40,10 +40,10 @@ resource "aws_ecs_service" "ecs_service" {
   task_definition = aws_ecs_task_definition.ecs_task_definition.arn
   desired_count   = var.service_desired_count
 
-  # network_configuration {
-  #   subnets         = var.vpc_subnets
-  #   security_groups = var.vpc_security_group_ids
-  # }
+  network_configuration {
+    subnets         = var.vpc_subnets
+    security_groups = [var.vpc_security_group_ids]
+  }
 
   # force_new_deployment = true
   # placement_constraints {
