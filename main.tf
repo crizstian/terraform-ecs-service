@@ -41,8 +41,8 @@ resource "aws_ecs_service" "ecs_service" {
   desired_count   = var.service_desired_count
 
   network_configuration {
-    subnets         = var.vpc_subnets
-    security_groups = jsondecode(var.vpc_security_group_ids)
+    subnets         = jsondecode(var.vpc_subnets)
+    security_groups = [var.vpc_security_group_ids]
   }
 
   # force_new_deployment = true
