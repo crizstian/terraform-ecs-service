@@ -5,13 +5,21 @@ variable "ecs_service_name" {}
 variable "ecs_cluster_id" {}
 variable "ecs_capacity_provider" {}
 
-variable "task_cpu" {}
-variable "task_memory" {}
+variable "task_cpu" {
+    default     = 256
+}
+variable "task_memory" {
+    default     = 512
+}
 variable "task_execution_role_arn" {}
 variable "task_role_arn" {}
 
-variable "ecs_task_cpu" {}
-variable "ecs_task_memory" {}
+variable "ecs_task_cpu" {
+    default     = 128
+}
+variable "ecs_task_memory" {
+     default     = 256
+}
 variable "ecs_task_port" {}
 
 variable "service_name" {}
