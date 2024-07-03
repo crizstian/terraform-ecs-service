@@ -1,4 +1,3 @@
-variable "ecs_execution_role_arn" {}
 variable "ecs_task_name" {}
 variable "ecs_task_image" {}
 variable "ecs_service_name" {}
