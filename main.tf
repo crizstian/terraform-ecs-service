@@ -135,48 +135,64 @@ resource "harness_platform_service" "example2" {
   ## It is mandatory for Service use in a pipeline
 
   yaml = <<-EOT
-    name: bankingdemo_v2
-    identifier: bankingdemo_v2
-    orgIdentifier: cristian_labs_MQTH
-    projectIdentifier: infrastructure_team_MQTH
-    serviceDefinition:
-      spec:
-        variables:
-          - name: desiredCount
-            type: String
-            description: ""
-            required: false
-            value: "1"
-        manifests:
-          - manifest:
-              identifier: task
-              type: EcsTaskDefinition
-              spec:
-                store:
-                  type: Harness
-                  spec:
-                    files:
-                      - /task
-          - manifest:
-              identifier: service
-              type: EcsServiceDefinition
-              spec:
-                store:
-                  type: Harness
-                  spec:
-                    files:
-                      - /ecs-service
-        artifacts:
-          primary:
-            primaryArtifactRef: docker
-            sources:
-              - spec:
-                  connectorRef: account.DockerHubDiego
-                  imagePath: diegokoala/harness-ff-bankingapp-ecs
-                  tag: ecs
-                  digest: ""
-                identifier: docker
-                type: DockerRegistry
-      type: ECS
+    service:
+      name: bankingdemo_v2
+      identifier: bankingdemo_v2
+      orgIdentifier: cristian_labs_MQTH
+      projectIdentifier: infrastructure_team_MQTH
+      serviceDefinition:
+        spec:
+          variables:
+            - name: desiredCount
+              type: String
+              description: ""
+              required: false
+              value: "${var.service_desired_count}"
+            - name: subnet1
+              type: String
+              description: ""
+              required: false
+              value: "${jsondecode(var.vpc_subnets)[0]}"
+            - name: subnet2
+              type: String
+              description: ""
+              required: false
+              value: "${jsondecode(var.vpc_subnets)[1]}"
+            - name: subnet3
+              type: String
+              description: ""
+              required: false
+              value: "${jsondecode(var.vpc_subnets)[2]}"
+          manifests:
+            - manifest:
+                identifier: task
+                type: EcsTaskDefinition
+                spec:
+                  store:
+                    type: Harness
+                    spec:
+                      files:
+                        - /task
+            - manifest:
+                identifier: service
+                type: EcsServiceDefinition
+                spec:
+                  store:
+                    type: Harness
+                    spec:
+                      files:
+                        - /ecs-service
+          artifacts:
+            primary:
+              primaryArtifactRef: docker
+              sources:
+                - spec:
+                    connectorRef: account.DockerHubDiego
+                    imagePath: diegokoala/harness-ff-bankingapp-ecs
+                    tag: ecs
+                    digest: ""
+                  identifier: docker
+                  type: DockerRegistry
+        type: ECS
   EOT
 }
