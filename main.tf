@@ -92,11 +92,21 @@ resource "harness_platform_service" "example" {
               description: ""
               required: false
               value: "${var.service_desired_count}"
-            - name: subnets
+            - name: subnet1
               type: String
               description: ""
               required: false
-              value: "${jsondecode(var.vpc_subnets)}"
+              value: "${jsondecode(var.vpc_subnets)[0]}"
+            - name: subnet2
+              type: String
+              description: ""
+              required: false
+              value: "${jsondecode(var.vpc_subnets)[1]}"
+            - name: subnet3
+              type: String
+              description: ""
+              required: false
+              value: "${jsondecode(var.vpc_subnets)[2]}"
           manifests:
             - manifest:
                 identifier: service
