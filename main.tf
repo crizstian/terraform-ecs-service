@@ -60,7 +60,7 @@ resource "aws_ecs_service" "ecs_service" {
   # }
 
   load_balancer {
-    target_group_arn = var.aws_lb_target_group
+    target_group_arn = lookup(var.aws_lb_target_group, "ex-tcp", {}).arn
     container_name   = var.ecs_task_name
     container_port   = var.ecs_task_port
   }
