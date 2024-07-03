@@ -21,7 +21,6 @@ variable "ecs_task_memory" {
 }
 variable "ecs_task_port" {}
 
-variable "service_name" {}
 variable "service_desired_count" {}
 
 variable "vpc_subnets" {

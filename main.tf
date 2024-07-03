@@ -6,7 +6,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   memory                   = var.task_memory
   execution_role_arn       = var.task_execution_role_arn
   task_role_arn            = var.task_role_arn
-
+  requires_compatibilities = ["FARGATE"]
   # runtime_platform {
   #   operating_system_family = "LINUX"
   #   cpu_architecture        = "X86_64"
@@ -31,8 +31,9 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
 
 # Define the ECS service that will run the task
 resource "aws_ecs_service" "ecs_service" {
-  name            = var.service_name
+  name            = var.ecs_service_name
   cluster         = var.ecs_cluster_id
+  launch_type     = "FARGATE"
   task_definition = aws_ecs_task_definition.ecs_task_definition.arn
   desired_count   = var.service_desired_count
 
@@ -64,7 +65,7 @@ resource "aws_ecs_service" "ecs_service" {
 
 resource "harness_platform_service" "example" {
   identifier  = "ecs"
-  name        = var.service_name
+  name        = var.ecs_service_name
   description = "test"
   org_id      = "cristian_labs_MQTH"
   project_id  = "infrastructure_team_MQTH"
@@ -76,7 +77,7 @@ resource "harness_platform_service" "example" {
 
   yaml = <<-EOT
     service:
-      name: ${var.service_name}
+      name: ${var.ecs_service_name}
       identifier: ecs
       orgIdentifier: cristian_labs_MQTH
       projectIdentifier: infrastructure_team_MQTH
